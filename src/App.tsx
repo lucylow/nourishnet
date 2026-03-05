@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import Dao from "./pages/Dao";
 import About from "./pages/About";
 import Impact from "./pages/Impact";
+import AI from "./pages/AI";
 import BusinessDashboard from "./pages/BusinessDashboard";
 import ShelterQueue from "./pages/ShelterQueue";
 import ImpactExplorer from "./pages/ImpactExplorer";
