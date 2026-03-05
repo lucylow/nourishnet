@@ -9,6 +9,7 @@ import {
 } from "recharts";
 import { mockDetections, wastePredictionData, businessSavingsData, type WasteDetection } from "@/lib/mock-data";
 import Navbar from "@/components/Navbar";
+import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 
 const BusinessDashboard = () => {
   const [detections, setDetections] = useState<WasteDetection[]>(mockDetections.slice(0, 3));
