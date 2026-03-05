@@ -48,6 +48,9 @@ const App = () => (
           <Route path="/dao" element={<Dao />} />
           <Route path="/about" element={<About />} />
           <Route path="/impact" element={<Impact />} />
+          <Route path="/business" element={<BusinessDashboard />} />
+          <Route path="/shelter" element={<ShelterQueue />} />
+          <Route path="/explorer" element={<ImpactExplorer />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
