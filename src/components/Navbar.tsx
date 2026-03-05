@@ -6,9 +6,10 @@ import { useState, useRef, useEffect } from "react";
 const pages = [
   { label: "Home", to: "/", icon: Home },
   { label: "Dashboard", to: "/dashboard", icon: LayoutDashboard },
-  { label: "Impact", to: "/impact", icon: BarChart3 },
+  { label: "Business", to: "/business", icon: BarChart3 },
+  { label: "Shelter Queue", to: "/shelter", icon: Users },
+  { label: "Impact Explorer", to: "/explorer", icon: BarChart3 },
   { label: "DAO", to: "/dao", icon: Vote },
-  { label: "About", to: "/about", icon: Users },
 ];
 
 const sections = [
