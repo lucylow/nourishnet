@@ -12,6 +12,8 @@ import About from "./pages/About";
 import Impact from "./pages/Impact";
 import AI from "./pages/AI";
 import AIVision from "./pages/AIVision";
+import AgentOrchestration from "./pages/AgentOrchestration";
+import BlockchainImpact from "./pages/BlockchainImpact";
 import PricingDashboard from "./pages/PricingDashboard";
 import EBTBundles from "./pages/EBTBundles";
 import BusinessDashboard from "./pages/BusinessDashboard";
