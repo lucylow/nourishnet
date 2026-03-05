@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { mockRescueTimeline, type RescueEvent } from "@/lib/mock-data";
 import Navbar from "@/components/Navbar";
+import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 import Footer from "@/components/Footer";
 
 function useAnimatedCounter(end: number, duration = 2000, inView: boolean) {
