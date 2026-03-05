@@ -11,6 +11,7 @@ import Dao from "./pages/Dao";
 import About from "./pages/About";
 import Impact from "./pages/Impact";
 import AI from "./pages/AI";
+import AIVision from "./pages/AIVision";
 import BusinessDashboard from "./pages/BusinessDashboard";
 import ShelterQueue from "./pages/ShelterQueue";
 import ImpactExplorer from "./pages/ImpactExplorer";
@@ -50,6 +51,7 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/impact" element={<Impact />} />
           <Route path="/ai" element={<AI />} />
+          <Route path="/ai/vision" element={<AIVision />} />
           <Route path="/business" element={<BusinessDashboard />} />
           <Route path="/shelter" element={<ShelterQueue />} />
           <Route path="/explorer" element={<ImpactExplorer />} />
