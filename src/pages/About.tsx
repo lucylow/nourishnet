@@ -1,9 +1,11 @@
 import Navbar from "@/components/Navbar";
+import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 import Footer from "@/components/Footer";
 
 const About = () => (
   <div className="min-h-screen bg-background">
     <Navbar />
+    <Breadcrumbs />
     <main className="container mx-auto py-16 space-y-12">
       <section className="max-w-3xl space-y-4">
         <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight text-foreground">
