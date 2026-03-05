@@ -54,10 +54,12 @@ const AIChatbot = () => {
   };
 
   const suggestions = [
-    "I'm hungry — find nearby surplus food",
-    "What waste will happen tomorrow?",
-    "Show me shelter nutrition gaps",
-    "How does NourishNet work?",
+    "Generate a recipe from 12kg chicken + 8kg tomatoes",
+    "What waste will happen tomorrow at Bakery #127?",
+    "Show me shelter nutrition gaps and recipe matches",
+    "How does the 5-agent pipeline work?",
+    "I'm hungry — find me nearby surplus food",
+    "Explain the dynamic pricing waterfall",
   ];
 
   return (
