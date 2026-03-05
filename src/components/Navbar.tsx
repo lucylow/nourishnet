@@ -54,7 +54,6 @@ const menuGroups: MegaMenuGroup[] = [
 const sections = [
   { label: "How it works", hash: "#features" },
   { label: "Impact Stats", hash: "#impact" },
-  { label: "Team", hash: "#team" },
 ];
 
 const Navbar = () => {
