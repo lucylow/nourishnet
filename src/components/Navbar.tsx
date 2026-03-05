@@ -1,4 +1,4 @@
-import { Leaf, Menu, X, ChevronDown, LayoutDashboard, Vote, Users, BarChart3, Home, Sparkles, Eye, DollarSign, Gift, Network, Link2 } from "lucide-react";
+import { Leaf, Menu, X, ChevronDown, LayoutDashboard, Vote, Users, BarChart3, Home, Sparkles, Eye, DollarSign, Gift, Network, Link2, ChefHat } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useState, useRef, useEffect } from "react";
