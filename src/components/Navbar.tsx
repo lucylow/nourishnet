@@ -1,4 +1,4 @@
-import { Leaf, Menu, X, ChevronDown, LayoutDashboard, Vote, Users, BarChart3, Home, Sparkles } from "lucide-react";
+import { Leaf, Menu, X, ChevronDown, LayoutDashboard, Vote, Users, BarChart3, Home, Sparkles, Eye } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useState, useRef, useEffect } from "react";
@@ -6,6 +6,7 @@ import { useState, useRef, useEffect } from "react";
 const pages = [
   { label: "Home", to: "/", icon: Home },
   { label: "AI Assistant", to: "/ai", icon: Sparkles },
+  { label: "AI Vision", to: "/ai/vision", icon: Eye },
   { label: "Dashboard", to: "/dashboard", icon: LayoutDashboard },
   { label: "Business", to: "/business", icon: BarChart3 },
   { label: "Shelter Queue", to: "/shelter", icon: Users },
