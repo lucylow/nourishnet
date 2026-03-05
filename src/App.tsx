@@ -10,6 +10,9 @@ import NotFound from "./pages/NotFound";
 import Dao from "./pages/Dao";
 import About from "./pages/About";
 import Impact from "./pages/Impact";
+import BusinessDashboard from "./pages/BusinessDashboard";
+import ShelterQueue from "./pages/ShelterQueue";
+import ImpactExplorer from "./pages/ImpactExplorer";
 
 const queryClient = new QueryClient();
 
