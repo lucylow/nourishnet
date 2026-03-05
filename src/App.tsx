@@ -12,6 +12,8 @@ import About from "./pages/About";
 import Impact from "./pages/Impact";
 import AI from "./pages/AI";
 import AIVision from "./pages/AIVision";
+import PricingDashboard from "./pages/PricingDashboard";
+import EBTBundles from "./pages/EBTBundles";
 import BusinessDashboard from "./pages/BusinessDashboard";
 import ShelterQueue from "./pages/ShelterQueue";
 import ImpactExplorer from "./pages/ImpactExplorer";
