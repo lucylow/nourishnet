@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NourishNet · Agent Control Room</title>
+    <!-- Tailwind + Font Awesome + Google Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #f4faf7; }
+        .agent-glow {
+            transition: box-shadow 0.2s;
+        }
+        .agent-glow:hover {
+            box-shadow: 0 0 0 3px rgba(43, 110, 79, 0.2), 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+        .pulse-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            margin-right: 6px;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .event-feed {
+            max-height: 280px;
+            overflow-y: auto;
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+        }
+        .event-item {
+            border-left: 3px solid;
+            padding-left: 0.75rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+        }
+        .task-card {
+            background: #f9f5ff;
+            border-left: 3px solid #8b5cf6;
+            transition: transform 0.1s;
+        }
+        .task-card:hover {
+            transform: translateX(4px);
+        }
+        .chat-bubble-agent {
+            background: #e6f7f0;
+            border-radius: 18px 18px 18px 4px;
+            padding: 0.6rem 1rem;
+            max-width: 80%;
+            align-self: flex-start;
+        }
+        .chat-bubble-user {
+            background: #3b82f6;
+            color: white;
+            border-radius: 18px 18px 4px 18px;
+            padding: 0.6rem 1rem;
+            max-width: 80%;
+            align-self: flex-end;
+        }
+        .impact-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+    </style>
+</head>
+<body class="p-5 md:p-8">
+
+    <!-- Header with brand and global status -->
+    <div class="max-w-6xl mx-auto mb-6 flex flex-wrap items-center justify-between">
+        <div class="flex items-center gap-3">
+            <i class="fas fa-seedling text-3xl text-green-700"></i>
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-800">NourishNet</h1>
+            <span class="bg-green-100 text-green-700 text-xs font-medium px-3 py-1 rounded-full">AI Agents · Zero Hunger</span>
+        </div>
+        <div class="flex gap-2 mt-2 sm:mt-0">
+            <span class="flex items-center text-sm bg-white px-3 py-1 rounded-full shadow-sm"><span class="pulse-dot"></span>All agents operational</span>
+            <button class="bg-green-600 text-white px-4 py-1.5 rounded-full text-sm font-medium flex items-center gap-1 hover:bg-green-700 transition"><i class="fas fa-play"></i> Demo mode</button>
+        </div>
+    </div>
+
+    <!-- Agent cards (3 columns) -->
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+        <!-- Scout Agent -->
+        <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 agent-glow">
+            <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600"><i class="fas fa-eye text-xl"></i></div>
+                    <div>
+                        <h2 class="font-semibold text-lg">Scout</h2>
+                        <p class="text-xs text-gray-500">Llama 3.1 8B</p>
+                    </div>
+                </div>
+                <span class="bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded-full">active</span>
+            </div>
+            <p class="text-sm text-gray-600 mb-2"><span class="font-medium">Last scan:</span> 2 min ago · <span class="font-medium">Found:</span> 3 items</p>
+            <div class="bg-gray-50 rounded-xl p-3 text-sm">
+                <span class="text-xs text-gray-400 uppercase block mb-1">Current thought</span>
+                <p class="text-gray-700 flex items-start gap-1"><i class="fas fa-comment-dots text-blue-500 text-xs mt-1"></i> “Extracting from Sunrise Bakery: 3 sandwiches, best before today”</p>
+            </div>
+            <div class="mt-3 flex gap-2">
+                <button class="text-xs bg-gray-100 px-2 py-1 rounded-full text-gray-600 hover:bg-gray-200 transition"><i class="far fa-clock mr-1"></i>schedule</button>
+                <button class="text-xs bg-gray-100 px-2 py-1 rounded-full text-gray-600 hover:bg-gray-200 transition"><i class="fas fa-search mr-1"></i>details</button>
+            </div>
+        </div>
+
+        <!-- Coordinator Agent -->
+        <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 agent-glow">
+            <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600"><i class="fas fa-code-branch text-xl"></i></div>
+                    <div>
+                        <h2 class="font-semibold text-lg">Coordinator</h2>
+                        <p class="text-xs text-gray-500">Mistral 7B</p>
+                    </div>
+                </div>
+                <span class="bg-yellow-50 text-yellow-700 text-xs px-2 py-1 rounded-full">matching</span>
+            </div>
+            <p class="text-sm text-gray-600 mb-2"><span class="font-medium">Active matches:</span> 4 · <span class="font-medium">Avg urgency:</span> 0.78</p>
+            <div class="bg-gray-50 rounded-xl p-3 text-sm">
+                <span class="text-xs text-gray-400 uppercase block mb-1">Current decision</span>
+                <p class="text-gray-700 flex items-start gap-1"><i class="fas fa-balance-scale text-yellow-500 text-xs mt-1"></i> “Matching surplus #123: Food Bank urgency 0.92, John D. 0.67”</p>
+            </div>
+            <div class="mt-3 flex gap-2">
+                <button class="text-xs bg-gray-100 px-2 py-1 rounded-full text-gray-600 hover:bg-gray-200 transition"><i class="fas fa-chart-line mr-1"></i>metrics</button>
+                <button class="text-xs bg-gray-100 px-2 py-1 rounded-full text-gray-600 hover:bg-gray-200 transition"><i class="fas fa-list mr-1"></i>queue</button>
+            </div>
+        </div>
+
+        <!-- Logistics Agent -->
+        <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 agent-glow">
+            <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-2">
+                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600"><i class="fas fa-comment-dots text-xl"></i></div>
+                    <div>
+                        <h2 class="font-semibold text-lg">Logistics</h2>
+                        <p class="text-xs text-gray-500">Gemma 2B</p>
+                    </div>
+                </div>
+                <span class="bg-green-50 text-green-700 text-xs px-2 py-1 rounded-full">conversing</span>
+            </div>
+            <p class="text-sm text-gray-600 mb-2"><span class="font-medium">Active chats:</span> 3 · <span class="font-medium">Msgs today:</span> 47</p>
+            <div class="bg-gray-50 rounded-xl p-3 text-sm">
+                <span class="text-xs text-gray-400 uppercase block mb-1">Latest reply</span>
+                <p class="text-gray-700 flex items-start gap-1"><i class="fab fa-whatsapp text-green-600 text-xs mt-1"></i> “Great! Show code NOURISH5 at counter.”</p>
+            </div>
+            <div class="mt-3 flex gap-2">
+                <button class="text-xs bg-gray-100 px-2 py-1 rounded-full text-gray-600 hover:bg-gray-200 transition"><i class="fas fa-sms mr-1"></i>channels</button>
+                <button class="text-xs bg-gray-100 px-2 py-1 rounded-full text-gray-600 hover:bg-gray-200 transition"><i class="fas fa-history mr-1"></i>history</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main dashboard: left column (feed + tasks) and right column (impact + chat) -->
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Left column (spans 2 cols on large) -->
+        <div class="lg:col-span-2 space-y-6">
+            <!-- Agent activity feed with filtering -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-semibold text-lg flex items-center gap-2"><i class="fas fa-rss text-green-600"></i> Agent Activity Feed</h3>
+                    <div class="flex gap-1 text-xs">
+                        <button class="filter-btn active bg-green-600 text-white px-2 py-1 rounded-full" data-filter="all">All</button>
+                        <button class="filter-btn bg-gray-100 px-2 py-1 rounded-full hover:bg-gray-200" data-filter="scout">Scout</button>
+                        <button class="filter-btn bg-gray-100 px-2 py-1 rounded-full hover:bg-gray-200" data-filter="coordinator">Coordinator</button>
+                        <button class="filter-btn bg-gray-100 px-2 py-1 rounded-full hover:bg-gray-200" data-filter="logistics">Logistics</button>
+                        <button class="filter-btn bg-gray-100 px-2 py-1 rounded-full hover:bg-gray-200" data-filter="human">Human</button>
+                    </div>
+                </div>
+                <div class="event-feed" id="eventFeed">
+                    <!-- events inserted via JS -->
+                </div>
+                <div class="flex justify-between text-xs text-gray-500 mt-2">
+                    <span><i class="far fa-clock mr-1"></i> live updates every 10s</span>
+                    <button id="clearFeed" class="text-green-700 hover:underline"><i class="far fa-trash-alt mr-1"></i>clear</button>
+                </div>
+            </div>
+
+            <!-- Human tasks section -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-semibold text-lg flex items-center gap-2"><i class="fas fa-user-check text-purple-600"></i> Human Supervisor – Pending Tasks</h3>
+                    <span class="bg-purple-100 text-purple-700 text-xs font-medium px-3 py-1 rounded-full" id="taskCount">0</span>
+                </div>
+                <div id="taskList" class="space-y-2">
+                    <!-- tasks rendered here -->
+                </div>
+                <p class="text-xs text-gray-400 mt-2"><i class="fas fa-info-circle mr-1"></i> Tasks auto‑refresh. Approve or reject to continue workflow.</p>
+            </div>
+        </div>
+
+        <!-- Right column: impact + chat -->
+        <div class="space-y-6">
+            <!-- Impact metrics card -->
+            <div class="bg-gradient-to-br from-green-700 to-green-600 text-white rounded-2xl p-5 shadow-md">
+                <h3 class="font-semibold text-lg mb-3 flex items-center gap-2"><i class="fas fa-globe-americas"></i> Real‑Time Impact</h3>
+                <div class="grid grid-cols-3 gap-2 text-center">
+                    <div>
+                        <div class="impact-number" id="mealsSaved">1,247</div>
+                        <div class="text-xs opacity-90">meals rescued</div>
+                    </div>
+                    <div>
+                        <div class="impact-number" id="co2Avoided">3.2</div>
+                        <div class="text-xs opacity-90">t CO₂ avoided</div>
+                    </div>
+                    <div>
+                        <div class="impact-number" id="peopleReached">89</div>
+                        <div class="text-xs opacity-90">people helped</div>
+                    </div>
+                </div>
+                <div class="mt-4 text-sm border-t border-green-500 pt-3 flex justify-between">
+                    <span>Agent inferences</span>
+                    <span class="font-mono" id="inferenceCount">4,892</span>
+                </div>
+            </div>
+
+            <!-- Chat simulator (WhatsApp style) -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                <h3 class="font-semibold text-lg mb-2 flex items-center gap-2"><i class="fab fa-whatsapp text-green-600"></i> Chat with Logistics Agent</h3>
+                <div class="h-64 overflow-y-auto flex flex-col gap-2 p-2 bg-gray-50 rounded-xl mb-2" id="chatWindow">
+                    <!-- chat messages -->
+                </div>
+                <div class="flex gap-2">
+                    <input type="text" id="chatInput" placeholder="Type your message..." class="flex-1 border border-gray-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+                    <button id="sendMessage" class="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-green-700 transition"><i class="fas fa-paper-plane"></i></button>
+                </div>
+                <p class="text-xs text-gray-400 mt-1"><i class="fas fa-robot mr-1"></i> Agent powered by Gemma 2B via FLock</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional guided tour / step indicator -->
+    <div class="max-w-6xl mx-auto mt-8 bg-white rounded-xl p-4 border border-gray-200 flex items-center gap-4 text-sm">
+        <i class="fas fa-route text-green-600"></i>
+        <span class="font-medium">How a food rescue flows:</span>
+        <div class="flex flex-wrap gap-3">
+            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs flex items-center"><i class="fas fa-eye mr-1"></i> 1. Scout detects surplus</span>
+            <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs flex items-center"><i class="fas fa-code-branch mr-1"></i> 2. Coordinator matches</span>
+            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs flex items-center"><i class="fas fa-comment mr-1"></i> 3. Logistics notifies</span>
+            <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs flex items-center"><i class="fas fa-user-check mr-1"></i> 4. Human approves (if needed)</span>
+            <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs flex items-center"><i class="fas fa-check-circle mr-1"></i> 5. Pickup confirmed → impact</span>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="max-w-6xl mx-auto mt-6 text-center text-xs text-gray-400 border-t pt-4">
+        NourishNet · UK AI Agent Hackathon EP4 · Built with OpenClaw, FLock, MCP
+    </div>
+
+    <script>
+        (function() {
+            // ---------- Mock data simulation for agents & impact ----------
+            const events = [
+                { agent: 'scout', message: 'Sunrise Bakery: 3 sandwiches (expires today)', time: '2s ago' },
+                { agent: 'coordinator', message: 'Matched surplus #123 with Food Bank (urgency 0.92)', time: '15s ago' },
+                { agent: 'logistics', message: 'WhatsApp sent to +447911123456: pickup code NOURISH5', time: '30s ago' },
+                { agent: 'human', message: 'Supervisor approved match for surplus #122', time: '1m ago' },
+                { agent: 'scout', message: 'Green Cafe: 5 croissants from this morning', time: '2m ago' },
+            ];
+
+            // Tasks are now driven by the backend /api/tasks
+            let tasks = [];
+
+            // Impact counters
+            let meals = 1247, co2 = 3.2, people = 89, inferences = 4892;
+
+            // DOM elements
+            const eventFeed = document.getElementById('eventFeed');
+            const taskList = document.getElementById('taskList');
+            const taskCount = document.getElementById('taskCount');
+            const clearFeed = document.getElementById('clearFeed');
+            const mealsSpan = document.getElementById('mealsSaved');
+            const co2Span = document.getElementById('co2Avoided');
+            const peopleSpan = document.getElementById('peopleReached');
+            const inferenceSpan = document.getElementById('inferenceCount');
+            const chatWindow = document.getElementById('chatWindow');
+            const chatInput = document.getElementById('chatInput');
+            const sendBtn = document.getElementById('sendMessage');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+
+            let currentFilter = 'all';
+
+            // ----- Agent activity feed -----
+            function renderEvents() {
+                const filtered = currentFilter === 'all' ? events : events.filter(e => e.agent === currentFilter);
+                eventFeed.innerHTML = filtered.map(e => `
+                    <div class="event-item" style="border-left-color: ${
+                        e.agent === 'scout' ? '#3b82f6' : e.agent === 'coordinator' ? '#f59e0b' : e.agent === 'logistics' ? '#10b981' : '#8b5cf6'
+                    }">
+                        <span class="font-medium text-xs text-gray-400">${e.time}</span>
+                        <span class="font-medium text-${
+                            e.agent === 'scout' ? 'blue' : e.agent === 'coordinator' ? 'yellow' : e.agent === 'logistics' ? 'green' : 'purple'
+                        }-600">[${e.agent}]</span> ${e.message}
+                    </div>
+                `).join('');
+            }
+
+            // ----- Human tasks (live from backend) -----
+            async function fetchTasks() {
+                try {
+                    const res = await fetch('/api/tasks');
+                    tasks = await res.json();
+                } catch (e) {
+                    tasks = [];
+                }
+                renderTasks();
+            }
+
+            function renderTasks() {
+                if (!tasks || !tasks.length) {
+                    taskList.innerHTML = '<p class="text-xs text-gray-500">No pending tasks right now.</p>';
+                    taskCount.textContent = '0';
+                    return;
+                }
+
+                taskList.innerHTML = tasks.map(t => {
+                    const message = t.message || 'Agent request';
+                    const original = t.context && t.context.original_listing
+                        ? `<p class="text-xs text-gray-400 mt-1"><span class="font-semibold">Original listing:</span> ${t.context.original_listing}</p>`
+                        : '';
+                    return `
+                        <div class="task-card p-3 rounded-lg flex justify-between items-start">
+                            <div class="pr-2">
+                                <p class="font-medium text-sm">${message}</p>
+                                ${original}
+                            </div>
+                            <div class="flex flex-col gap-1">
+                                <button class="task-approve bg-green-500 text-white text-xs px-2 py-1 rounded hover:bg-green-600" data-id="${t.id}"><i class="fas fa-check"></i></button>
+                                <button class="task-reject bg-gray-300 text-gray-700 text-xs px-2 py-1 rounded hover:bg-gray-400" data-id="${t.id}"><i class="fas fa-times"></i></button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                taskCount.textContent = String(tasks.length);
+            }
+
+            // Initial render for events
+            renderEvents();
+
+            // Fetch tasks initially and on interval
+            fetchTasks();
+            setInterval(fetchTasks, 5000);
+
+            // Filter buttons
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active', 'bg-green-600', 'text-white'));
+                    btn.classList.add('active', 'bg-green-600', 'text-white');
+                    currentFilter = btn.dataset.filter;
+                    renderEvents();
+                });
+            });
+
+            // Clear feed
+            clearFeed.addEventListener('click', () => {
+                eventFeed.innerHTML = '';
+            });
+
+            // Task approve / reject handlers (one‑click)
+            taskList.addEventListener('click', async (e) => {
+                const target = e.target.closest('button');
+                if (!target) return;
+                const taskId = target.dataset.id;
+                if (!taskId) return;
+
+                const isApprove = target.classList.contains('task-approve');
+                const action = isApprove ? 'accept' : 'reject';
+
+                try {
+                    await fetch(`/api/respond/${taskId}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ action })
+                    });
+                } catch (err) {
+                    // For demo purposes ignore network errors
+                }
+
+                // Add a human event to the feed
+                events.unshift({
+                    agent: 'human',
+                    message: `Task ${taskId} ${isApprove ? 'approved' : 'rejected'} by supervisor`,
+                    time: 'just now'
+                });
+                if (events.length > 10) events.pop();
+                renderEvents();
+
+                // Refresh tasks from backend
+                fetchTasks();
+            });
+
+            // ----- Simulate periodic agent updates -----
+            setInterval(() => {
+                const agents = ['scout', 'coordinator', 'logistics'];
+                const agent = agents[Math.floor(Math.random() * agents.length)];
+                let msg = '';
+                if (agent === 'scout') msg = `Scanned ${Math.floor(Math.random()*5)+1} businesses, found ${Math.floor(Math.random()*3)} surplus items`;
+                else if (agent === 'coordinator') msg = `Matched surplus #${Math.floor(Math.random()*200)} with ${Math.floor(Math.random()*3)+1} recipients`;
+                else msg = `User replied: "${['On my way','Thanks!','Where is it?'][Math.floor(Math.random()*3)]}"`;
+                events.unshift({ agent, message: msg, time: 'just now' });
+                if (events.length > 10) events.pop();
+                renderEvents();
+
+                // Update counters
+                meals += Math.floor(Math.random() * 2);
+                co2 = parseFloat((co2 + (Math.random() * 0.02)).toFixed(2));
+                people += Math.floor(Math.random() * 2);
+                inferences += Math.floor(Math.random() * 10) + 5;
+                mealsSpan.innerText = meals.toLocaleString();
+                co2Span.innerText = co2.toFixed(1);
+                peopleSpan.innerText = people;
+                inferenceSpan.innerText = inferences.toLocaleString();
+            }, 12000);
+
+            // ----- Chat simulator -----
+            function addMessage(text, isUser = false) {
+                const bubble = document.createElement('div');
+                bubble.className = isUser ? 'chat-bubble-user' : 'chat-bubble-agent';
+                bubble.innerText = text;
+                chatWindow.appendChild(bubble);
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+            }
+
+            // Initial chat messages
+            addMessage('🍱 Free food alert! Sunrise Bakery has 3 sandwiches. Code: NOURISH5. Pick up before 8pm.', false);
+            addMessage('I’m on my way!', true);
+            addMessage('Great! Show the code at the counter.', false);
+
+            function agentReply(userMsg) {
+                const lower = userMsg.toLowerCase();
+                if (lower.includes('hungry') || lower.includes('food')) return 'I found a bakery with 2 sandwiches. Use code NOURISH6 to pick up.';
+                if (lower.includes('code')) return 'Your code is NOURISH5. Show it at the counter.';
+                if (lower.includes('where')) return 'Sunrise Bakery, 45 High Street. 5 minutes away.';
+                if (lower.includes('thank')) return "You're welcome! Enjoy your meal.";
+                return "I'm here to help with food rescue. Ask about codes, directions, or say 'hungry'.";
+            }
+
+            sendBtn.addEventListener('click', () => {
+                const msg = chatInput.value.trim();
+                if (!msg) return;
+                addMessage(msg, true);
+                chatInput.value = '';
+                setTimeout(() => {
+                    const reply = agentReply(msg);
+                    addMessage(reply, false);
+                }, 600);
+            });
+
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendBtn.click();
+            });
+
+            // Simulate incoming user message (for demo)
+            setTimeout(() => {
+                addMessage('What’s the pickup code?', true);
+                setTimeout(() => {
+                    addMessage('Your code is NOURISH5. Show it at the counter.', false);
+                }, 800);
+            }, 5000);
+        })();
+    </script>
+</body>
+</html>
+

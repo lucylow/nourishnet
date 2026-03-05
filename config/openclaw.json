@@ -1,0 +1,170 @@
+{
+  "version": "2.0",
+  "gateway": {
+    "port": 18789,
+    "host": "0.0.0.0"
+  },
+  "agents": {
+    "scout": {
+      "path": "./agents/scout",
+      "description": "Detects surplus food from businesses",
+      "defaultModel": "custom-proxy/llama-3.1-8b",
+      "sandbox": {
+        "scope": "agent",
+        "workspaceAccess": ["read", "write"]
+      },
+      "tools": [
+        "skill://flock-extract",
+        "skill://web-scraper",
+        "skill://human-request"
+      ],
+      "memory": {
+        "type": "persistent",
+        "path": "./agents/scout/memory"
+      },
+      "cron": [
+        {
+          "schedule": "*/30 * * * *",
+          "task": "scan-businesses"
+        }
+      ],
+      "environment": {
+        "FLOCK_API_KEY": "${FLOCK_API_KEY}",
+        "BUSINESS_FEED_URL": "https://api.partners.com/feed"
+      },
+      "allowFrom": ["internal-scheduler", "coordinator"],
+      "rateLimit": 100
+    },
+    "coordinator": {
+      "path": "./agents/coordinator",
+      "description": "Matches surplus with recipients",
+      "defaultModel": "custom-proxy/mistral-7b",
+      "sandbox": {
+        "scope": "agent",
+        "workspaceAccess": ["read"]
+      },
+      "tools": [
+        "skill://flock-urgency",
+        "skill://recipient-matcher",
+        "skill://database-query"
+      ],
+      "subagents": {
+        "maxConcurrent": 4
+      },
+      "environment": {
+        "FLOCK_API_KEY": "${FLOCK_API_KEY}",
+        "REDIS_URL": "${REDIS_URL}"
+      }
+    },
+    "logistics": {
+      "path": "./agents/logistics",
+      "description": "Communicates via WhatsApp/Telegram",
+      "defaultModel": "custom-proxy/gemma-2b",
+      "sandbox": {
+        "scope": "agent",
+        "workspaceAccess": ["read", "write"]
+      },
+      "tools": [
+        "skill://flock-chat",
+        "skill://whatsapp-send",
+        "skill://telegram-send"
+      ],
+      "channels": {
+        "whatsapp": {
+          "enabled": true,
+          "dmPolicy": "pairing",
+          "allowFrom": ["+447911123456"]
+        },
+        "telegram": {
+          "enabled": true,
+          "dmPolicy": "pairing",
+          "allowFrom": ["@foodbank_king"]
+        }
+      },
+      "environment": {
+        "FLOCK_API_KEY": "${FLOCK_API_KEY}",
+        "TWILIO_ACCOUNT_SID": "${TWILIO_ACCOUNT_SID}",
+        "TWILIO_AUTH_TOKEN": "${TWILIO_AUTH_TOKEN}",
+        "TELEGRAM_BOT_TOKEN": "${TELEGRAM_BOT_TOKEN}"
+      }
+    }
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "custom-proxy": {
+        "baseUrl": "https://api.flock.io/v1",
+        "apiKey": "${FLOCK_API_KEY}",
+        "auth": "api-key",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "llama-3.1-8b",
+            "name": "Llama 3.1 8B",
+            "api": "openai-completions",
+            "contextWindow": 128000
+          },
+          {
+            "id": "mistral-7b",
+            "name": "Mistral 7B",
+            "api": "openai-completions",
+            "contextWindow": 32000
+          },
+          {
+            "id": "gemma-2b",
+            "name": "Gemma 2B",
+            "api": "openai-completions",
+            "contextWindow": 8192
+          }
+        ]
+      }
+    }
+  },
+  "skills": {
+    "paths": ["./skills"],
+    "registry": "https://clawhub.openclaw.ai"
+  },
+  "security": {
+    "dmPolicy": "pairing",
+    "sandbox": {
+      "scope": "agent",
+      "workspaceAccess": {
+        "scout": ["read", "write"],
+        "coordinator": ["read"],
+        "logistics": ["read", "write"]
+      }
+    }
+  },
+  "plugins": {
+    "entries": {
+      "mcp-adapter": {
+        "enabled": true,
+        "config": {
+          "servers": [
+            {
+              "name": "scout",
+              "transport": "stdio",
+              "command": "python",
+              "args": ["agents/scout.py"]
+            },
+            {
+              "name": "coordinator",
+              "transport": "stdio",
+              "command": "python",
+              "args": ["agents/coordinator.py"]
+            },
+            {
+              "name": "logistics",
+              "transport": "stdio",
+              "command": "python",
+              "args": ["agents/logistics.py"]
+            },
+            { "name": "calendar", "transport": "http", "url": "http://localhost:8002" },
+            { "name": "crm", "transport": "http", "url": "http://localhost:8003" },
+            { "name": "websearch", "transport": "http", "url": "http://localhost:8004" }
+          ]
+        }
+      }
+    }
+  }
+}
