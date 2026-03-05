@@ -5,8 +5,10 @@ import { useState, useRef, useEffect } from "react";
 
 const pages = [
   { label: "Home", to: "/", icon: Home },
-  { label: "AI Assistant", to: "/ai", icon: Sparkles },
-  { label: "AI Vision", to: "/ai/vision", icon: Eye },
+  { label: "AI Chat", to: "/ai", icon: Sparkles },
+  { label: "Vision", to: "/ai/vision", icon: Eye },
+  { label: "Agents", to: "/ai/agents", icon: Network },
+  { label: "Blockchain", to: "/ai/blockchain", icon: Link2 },
   { label: "Pricing", to: "/pricing", icon: DollarSign },
   { label: "Bundles", to: "/bundles", icon: Gift },
   { label: "Dashboard", to: "/dashboard", icon: LayoutDashboard },
