@@ -109,6 +109,7 @@ const ShelterQueue = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
+      <Breadcrumbs />
       <main className="container mx-auto py-8 space-y-6">
         {/* Header */}
         <div>

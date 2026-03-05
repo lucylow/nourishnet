@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 import Footer from "@/components/Footer";
 import ProposalForm from "@/components/dao/ProposalForm";
 import VotePanel from "@/components/dao/VotePanel";
@@ -6,6 +7,7 @@ import VotePanel from "@/components/dao/VotePanel";
 const Dao = () => (
   <div className="min-h-screen bg-background">
     <Navbar />
+    <Breadcrumbs />
     <main className="container mx-auto py-10 space-y-10">
       <section className="max-w-3xl space-y-4">
         <h1 className="text-3xl font-bold tracking-tight">NourishNet DAO</h1>

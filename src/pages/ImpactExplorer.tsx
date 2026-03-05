@@ -69,6 +69,7 @@ const ImpactExplorer = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
+      <Breadcrumbs />
       <main className="container mx-auto py-8 space-y-10" ref={ref}>
         {/* Hero Counters */}
         <div className="text-center space-y-4">
