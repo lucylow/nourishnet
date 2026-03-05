@@ -15,6 +15,7 @@ import AIVision from "./pages/AIVision";
 import AgentOrchestration from "./pages/AgentOrchestration";
 import BlockchainImpact from "./pages/BlockchainImpact";
 import RecipeBundles from "./pages/RecipeBundles";
+import MARLPricing from "./pages/MARLPricing";
 import PricingDashboard from "./pages/PricingDashboard";
 import EBTBundles from "./pages/EBTBundles";
 import BusinessDashboard from "./pages/BusinessDashboard";
