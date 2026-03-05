@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
+import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 import Footer from "@/components/Footer";
 import { toast } from "@/hooks/use-toast";
 
@@ -157,6 +158,7 @@ const BlockchainImpact = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
+      <Breadcrumbs />
       <main className="container mx-auto py-8 space-y-8" ref={ref}>
         {/* Header */}
         <div className="text-center space-y-4">

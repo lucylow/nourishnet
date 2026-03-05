@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import Navbar from "@/components/Navbar";
+import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 import Footer from "@/components/Footer";
 import { toast } from "@/hooks/use-toast";
 import { mockBundles, type ImpactBundle } from "@/lib/pricing-data";
@@ -130,6 +131,7 @@ const EBTBundles = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
+      <Breadcrumbs />
       <main className="container mx-auto py-8 space-y-8">
         {/* Header */}
         <div className="text-center space-y-3">

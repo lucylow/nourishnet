@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import Navbar from "@/components/Navbar";
+import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 import Footer from "@/components/Footer";
 import { toast } from "@/hooks/use-toast";
 import {
@@ -317,6 +318,7 @@ const RecipeBundles = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
+      <Breadcrumbs />
       <main className="container mx-auto py-8 space-y-8" ref={ref}>
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">

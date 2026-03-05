@@ -9,6 +9,7 @@ import {
 } from "recharts";
 import { mockDetections, wastePredictionData, businessSavingsData, type WasteDetection } from "@/lib/mock-data";
 import Navbar from "@/components/Navbar";
+import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 
 const BusinessDashboard = () => {
   const [detections, setDetections] = useState<WasteDetection[]>(mockDetections.slice(0, 3));
@@ -29,6 +30,7 @@ const BusinessDashboard = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
+      <Breadcrumbs />
       <main className="container mx-auto py-8 space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">

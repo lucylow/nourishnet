@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { mockShelters, mockMatches, type PriorityMatch, type ShelterNutritionGap } from "@/lib/mock-data";
 import Navbar from "@/components/Navbar";
+import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 import { toast } from "@/hooks/use-toast";
 
 const nutrientLabels: Record<string, string> = { protein: "Protein", vitC: "Vitamin C", carbs: "Carbs", calories: "Calories" };
@@ -108,6 +109,7 @@ const ShelterQueue = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
+      <Breadcrumbs />
       <main className="container mx-auto py-8 space-y-6">
         {/* Header */}
         <div>
