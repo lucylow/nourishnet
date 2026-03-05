@@ -9,6 +9,7 @@ const pages = [
   { label: "Vision", to: "/ai/vision", icon: Eye },
   { label: "Agents", to: "/ai/agents", icon: Network },
   { label: "Blockchain", to: "/ai/blockchain", icon: Link2 },
+  { label: "Recipes", to: "/ai/recipes", icon: ChefHat },
   { label: "Pricing", to: "/pricing", icon: DollarSign },
   { label: "Bundles", to: "/bundles", icon: Gift },
   { label: "Dashboard", to: "/dashboard", icon: LayoutDashboard },

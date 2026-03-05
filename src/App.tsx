@@ -59,6 +59,7 @@ const App = () => (
           <Route path="/ai/vision" element={<AIVision />} />
           <Route path="/ai/agents" element={<AgentOrchestration />} />
           <Route path="/ai/blockchain" element={<BlockchainImpact />} />
+          <Route path="/ai/recipes" element={<RecipeBundles />} />
           <Route path="/pricing" element={<PricingDashboard />} />
           <Route path="/bundles" element={<EBTBundles />} />
           <Route path="/business" element={<BusinessDashboard />} />
