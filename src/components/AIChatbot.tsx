@@ -69,7 +69,7 @@ const AIChatbot = () => {
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
             <Sparkles className="h-4 w-4" />
-            Powered by Lovable AI
+            Powered by FLock.io & OpenClaw
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground font-display mb-2">
             Talk to NourishNet AI
